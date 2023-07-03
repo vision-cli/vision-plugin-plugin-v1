@@ -11,15 +11,19 @@ import (
 	"github.com/vision-cli/vision-plugin-plugin-v1/run"
 )
 
+const (
+	create = "create"
+)
+
 var Usage = api_v1.PluginUsageResponse{
 	Version:        "0.1.0",
 	Use:            "plugin",
 	Short:          "create plugins",
 	Long:           "create vision plugins using a standard template",
 	Example:        "vision plugin create myplugin v1 -r github.com/mycompany",
-	Subcommands:    []string{"create"},
+	Subcommands:    []string{create},
 	Flags:          []api_v1.PluginFlag{},
-	RequiresConfig: false,
+	RequiresConfig: true, // change this to false if this plugin does not require config to be loaded and placeholders passed
 }
 
 var DefaultConfig = api_v1.PluginConfigResponse{
@@ -48,7 +52,7 @@ func Handle(input string, e execute.Executor, t tmpl.TmplWriter) string {
 			return errorResponse(errors.New("missing cli command"))
 		}
 		switch req.Args[placeholders.ArgsCommandIndex] {
-		case "create":
+		case create:
 			if len(req.Args) <= 2 ||
 				req.Args[placeholders.ArgsNameIndex] == "" ||
 				req.Args[placeholders.ArgsVersionIndex] == "" {

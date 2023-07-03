@@ -13,7 +13,7 @@ func TestHandle_WithValidUsageInput_ReturnsUsageResponseString(t *testing.T) {
 	e := mocks.NewMockExecutor()
 	tw := mocks.NewMockTmplWriter()
 	result := plugin.Handle(CreateRequest(t, "usage"), &e, &tw)
-	expected := `{"Version":"0.1.0","Use":"plugin","Short":"create plugins","Long":"create vision plugins using a standard template","Example":"vision plugin create myplugin","Subcommands":["create"],"Flags":[],"RequiresConfig":false}`
+	expected := `{"Version":"0.1.0","Use":"plugin","Short":"create plugins","Long":"create vision plugins using a standard template","Example":"vision plugin create myplugin v1 -r github.com/mycompany","Subcommands":["create"],"Flags":[],"RequiresConfig":true}`
 	assert.Equal(t, expected, result)
 }
 
@@ -46,7 +46,7 @@ func TestHandle_WithValidRunInput_ReturnsRunResponseString(t *testing.T) {
 	e := mocks.NewMockExecutor()
 	tw := mocks.NewMockTmplWriter()
 	req := CreateRequest(t, "run")
-	req = strings.Replace(req, `"Args":[]`, `"Args":["create","myservice"]`, 1)
+	req = strings.Replace(req, `"Args":[]`, `"Args":["create","myplugin","v1"]`, 1)
 	result := plugin.Handle(req, &e, &tw)
 	expected := `{"Result":"SUCCESS!","Error":""}`
 	assert.Equal(t, expected, result)
