@@ -13,7 +13,7 @@ func TestHandle_WithValidUsageInput_ReturnsUsageResponseString(t *testing.T) {
 	e := mocks.NewMockExecutor()
 	tw := mocks.NewMockTmplWriter()
 	result := plugin.Handle(CreateRequest(t, "usage"), &e, &tw)
-	expected := `{"Version":"0.1.0","Use":"{{.Name}}","Short":"manage {{.Name}}","Long":"manage {{.Name}} using a standard template","Example":"vision {{.Name}} create my{{.Name | Pascal}}","Subcommands":["create"],"Flags":[],"RequiresConfig":false}`
+	expected := `{"Version":"0.1.0","Use":"{{.Name}}","Short":"manage {{.Name}}","Long":"manage {{.Name}} using a standard template","Example":"vision {{.Name}} create my{{.Name | Pascal}}","Subcommands":["create"],"Flags":[],"RequiresConfig":true}`
 	assert.Equal(t, expected, result)
 }
 
