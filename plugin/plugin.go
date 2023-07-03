@@ -23,7 +23,7 @@ var Usage = api_v1.PluginUsageResponse{
 	Example:        "vision plugin create myplugin v1 -r github.com/mycompany",
 	Subcommands:    []string{create},
 	Flags:          []api_v1.PluginFlag{},
-	RequiresConfig: true, // change this to false if this plugin does not require config to be loaded and placeholders passed
+	RequiresConfig: false,
 }
 
 var DefaultConfig = api_v1.PluginConfigResponse{
