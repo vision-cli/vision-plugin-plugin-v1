@@ -1,0 +1,22 @@
+package version
+
+import (
+	"encoding/json"
+
+	"github.com/spf13/cobra"
+	api "github.com/vision-cli/api/v1"
+	"github.com/vision-cli/vision-plugin-plugin-v1/cmd/model"
+)
+
+var VersionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "plugin version",
+	Long:  "semantic version of the plugin",
+	Args:  cobra.NoArgs,
+	Run: func(cmd *cobra.Command, args []string) {
+		json.NewEncoder(model.Out).Encode(
+			api.Version{
+				SemVer: model.PluginSemVer,
+			})
+	},
+}

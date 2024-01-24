@@ -1,0 +1,73 @@
+# --- start of instructions ---
+NB: Delete these instructions to leave you with a README.md file for your plugin.
+
+1. In cmd/initialise/initialise.go, update:
+- Update the Constants at the top of file with your plugin's settings
+- PluginConfig with a struct of config that your plugin needs
+- runCommand with the command that your plugin needs to run 
+
+2. Update the plugin info
+- Update the cmd/info/info.txt with a long desctiption of your plugin
+- Update the cmd/info/info.go with a short desctiption of your plugin
+
+3. Follow the instructions in cmd/generate/generate.go
+- Update the code generation code
+- Uppate the template files in _template
+
+4. If your plugin uses the 'Add' command then follow the instructions in cmd/add/add.go
+
+5. Update the README.md below (items between angle brackets) and delete the text between these # --- instructions --- # lines
+
+# --- end of instructions ---
+
+# ![logo](./images/vision-logo.svg "Vision") &nbsp; Vision Plugin - {{ .PluginConfig.Name }}
+
+This plugin <short description of what your plugin does>
+
+Vision plugins require golang (https://go.dev) to be installed
+
+## Install
+
+Install the plugin with
+
+```
+go install github.com/vision-cli/<your plugin repo>@latest
+```
+
+You will now see the plugin help in the vision cli
+
+```
+vision <plugin command> --help
+```
+
+You will now see the plugin available in vision's help
+
+```
+vision --help
+```
+
+The plugin will be listed in plugins list
+
+```
+vision plugins list
+```
+
+## Run
+
+Create a <plugin> project
+
+```
+vision init <project name>
+```
+
+Switch to the project directory
+
+```
+cd <project name>
+```
+
+Initialise the <plugin> plugin
+
+```
+vision <plugin> init <parameters>
+```

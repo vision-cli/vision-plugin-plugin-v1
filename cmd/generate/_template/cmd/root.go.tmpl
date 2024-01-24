@@ -1,0 +1,27 @@
+package cmd
+
+import (
+	"github.com/spf13/cobra"
+
+	"{{ .PluginConfig.Module }}/cmd/generate"
+	"{{ .PluginConfig.Module }}/cmd/info"
+	"{{ .PluginConfig.Module }}/cmd/initialise"
+	"{{ .PluginConfig.Module }}/cmd/model"
+	"{{ .PluginConfig.Module }}/cmd/version"
+)
+
+func init() {
+	rootCmd.AddCommand(initialise.InitCmd)
+	rootCmd.AddCommand(info.InfoCmd)
+	rootCmd.AddCommand(version.VersionCmd)
+	rootCmd.AddCommand(generate.GenerateCmd)
+}
+
+var rootCmd = &cobra.Command{
+	Use:                model.PluginCommand,
+	FParseErrWhitelist: cobra.FParseErrWhitelist{UnknownFlags: true},
+}
+
+func Execute() {
+	rootCmd.Execute()
+}
