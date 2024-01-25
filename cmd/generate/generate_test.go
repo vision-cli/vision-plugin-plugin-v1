@@ -1,4 +1,4 @@
-package generate_test
+package generate
 
 import (
 	"encoding/json"
@@ -25,4 +25,9 @@ func TestOpenVisionJsonReturnsConvertedConfig(t *testing.T) {
 	assert.Equal(t, "plugin", jsonData.PluginConfig.Command)
 	assert.Equal(t, "github.com/vision-cli/test", jsonData.PluginConfig.Module)
 	assert.Equal(t, "vision-plugin-plugin-v1", jsonData.PluginConfig.Name)
+}
+
+func TestGetLatestGoVersion(t *testing.T) {
+	v, _ := getLatestGoVersion()
+	assert.Equal(t, "1.", v[:2])
 }

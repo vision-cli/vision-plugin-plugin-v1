@@ -36,6 +36,7 @@ type success struct {
 
 type convertConfig struct {
 	PluginConfig model.PluginConfig `json:"config"`
+	GoVersion    string
 	Other    string // TODO: add other fields used in templating
 }
 
@@ -142,9 +143,15 @@ func openVisionJson(vPath string) (*convertConfig, error) {
 		return nil, fmt.Errorf("unmarshalling json: %w", err)
 	}
 
+	gv, err := getLatestGoVersion()
+	if err != nil {
+		return nil, fmt.Errorf("getting latest Go version: %w", err)
+	}
+
 	// convert struct to use correct JSON tag
 	var convConf convertConfig
 	convConf.PluginConfig = jsonData.PluginConfig
+	convConf.GoVersion = gv
 	convConf.Other = "other" // TODO: populate other fields
 
 	return &convConf, nil
@@ -205,4 +212,17 @@ func cloneExecTmpl(src, dst string, vj *convertConfig) error {
 	}
 
 	return tmplEx.Execute(f, vj)
+}
+
+func getLatestGoVersion() (string, error) {
+	r, err := http.Get("https://go.dev/VERSION?m=text")
+
+	if err != nil {
+		return "", fmt.Errorf("getting Go version: %w", err)
+	}
+
+	body, err := io.ReadAll(r.Body)
+	goVersion := string(body[2:8])
+
+	return goVersion, nil
 }

@@ -1,22 +1,17 @@
 # --- start of instructions ---
 NB: Delete these instructions to leave you with a README.md file for your plugin.
 
-1. In cmd/initialise/initialise.go, update:
-- Update the Constants at the top of file with your plugin's settings
-- PluginConfig with a struct of config that your plugin needs
-- runCommand with the command that your plugin needs to run 
+1. Update cmd/model/model.go with the info marked TODO
 
-2. Update the plugin info
-- Update the cmd/info/info.txt with a long desctiption of your plugin
-- Update the cmd/info/info.go with a short desctiption of your plugin
+2. Update cmd/initialise/initialise.go with the info marked TODO, including the code for initialising the plugin
 
-3. Follow the instructions in cmd/generate/generate.go
-- Update the code generation code
-- Uppate the template files in _template
+3. Update cmd/info/info.go and info.txt with the info marked TODO
 
-4. If your plugin uses the 'Add' command then follow the instructions in cmd/add/add.go
+4. Update cmd/generate/generate.go with the info marked TODO and the generate code
 
-5. Update the README.md below (items between angle brackets) and delete the text between these # --- instructions --- # lines
+5. If your plugin uses the 'Add' command
+
+6. Update the README.md below (items between angle brackets) and delete the text between these # --- instructions --- # lines
 
 # --- end of instructions ---
 
@@ -31,7 +26,7 @@ Vision plugins require golang (https://go.dev) to be installed
 Install the plugin with
 
 ```
-go install github.com/vision-cli/<your plugin repo>@latest
+go install {{ .PluginConfig.Module }}@latest
 ```
 
 You will now see the plugin help in the vision cli

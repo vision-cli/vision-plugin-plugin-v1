@@ -3,10 +3,10 @@ package info
 import (
 	_ "embed"
 	"encoding/json"
+	"os"
 
 	"github.com/spf13/cobra"
 	api "github.com/vision-cli/api/v1"
-	"github.com/vision-cli/vision-plugin-plugin-v1/cmd/model"
 )
 
 //go:embed info.txt
@@ -18,7 +18,7 @@ var InfoCmd = &cobra.Command{
 	Long:  "return detailed information about the plugin",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		json.NewEncoder(model.Out).Encode(api.Info{
+		json.NewEncoder(os.Stdout).Encode(api.Info{
 			ShortDescription: "Create vision plugins",
 			LongDescription:  infoOutput,
 		})

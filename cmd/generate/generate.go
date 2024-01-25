@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -41,7 +42,7 @@ type convertConfig struct {
 
 // wraps the run function to determine a success or failed response
 func generateAndCheck(cmd *cobra.Command, args []string) error {
-	jEnc := json.NewEncoder(model.Out)
+	jEnc := json.NewEncoder(os.Stdout)
 
 	err := run(cmd, args)
 	if err != nil {
@@ -213,13 +214,14 @@ func cloneExecTmpl(src, dst string, vj *convertConfig) error {
 }
 
 func getLatestGoVersion() (string, error) {
-	cmd := "curl 'https://go.dev/VERSION?m=text'"
-	b, err := exec.Command("bash", "-c", cmd).Output()
+	r, err := http.Get("https://go.dev/VERSION?m=text")
+
 	if err != nil {
-		return "", fmt.Errorf("curling Go version: %w", err)
+		return "", fmt.Errorf("getting Go version: %w", err)
 	}
 
-	goVersion := string(b)[2:8]
+	body, err := io.ReadAll(r.Body)
+	goVersion := string(body[2:8])
 
 	return goVersion, nil
 }

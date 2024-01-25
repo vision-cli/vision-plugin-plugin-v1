@@ -1,8 +1,10 @@
-package initialise
+package initialize
 
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -22,25 +24,27 @@ var InitCmd = &cobra.Command{
 
 		return nil
 	},
-	RunE: runCommand,
+	RunE: RunCommand(os.Stdout),
 }
 
-func runCommand(cmd *cobra.Command, args []string) error {
-	jEnc := json.NewEncoder(model.Out)
+func RunCommand(w io.Writer) func(cmd *cobra.Command, args []string) error {
+	return func(cmd *cobra.Command, args []string) error {
+		jEnc := json.NewEncoder(w)
 
-	pd := model.PluginConfig{
-		Name:    model.PluginName,
-		Module:  args[0],
-		Command: model.PluginCommand,
+		pd := model.PluginConfig{
+			Name:    model.PluginName,
+			Module:  args[0],
+			Command: model.PluginCommand,
+		}
+
+		err := jEnc.Encode(api.Init{
+			Config:  pd,
+			Success: true,
+		})
+
+		if err != nil {
+			return fmt.Errorf("encoding json: %w", err)
+		}
+		return nil
 	}
-
-	err := jEnc.Encode(api.Init{
-		Config:  pd,
-		Success: true,
-	})
-
-	if err != nil {
-		return fmt.Errorf("encoding json: %w", err)
-	}
-	return nil
 }
