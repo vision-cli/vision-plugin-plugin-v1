@@ -1,12 +1,5 @@
 package model
 
-import (
-	"io"
-	"os"
-)
-
-var Out io.Writer = os.Stdout
-
 const PluginSemVer = "v0.0.1" // TODO: update this to your plugin's version
 const PluginName = "{{ .PluginConfig.Name }}"
 const PluginCommand = "{{ .PluginConfig.Command }}"

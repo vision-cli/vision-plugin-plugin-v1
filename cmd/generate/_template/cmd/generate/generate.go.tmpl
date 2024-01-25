@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/fs"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -42,7 +43,7 @@ type convertConfig struct {
 
 // wraps the run function to determine a success or failed response
 func generateAndCheck(cmd *cobra.Command, args []string) error {
-	jEnc := json.NewEncoder(model.Out)
+	jEnc := json.NewEncoder(os.Stdout)
 
 	err := run(cmd, args)
 	if err != nil {
