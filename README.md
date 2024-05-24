@@ -47,7 +47,7 @@ cd <plugin project name>
 Initialise the plugin plugin
 
 ```
-vision plugin init <plugin project name>
+vision plugin init <plugin module name e.g. github.com/vision-cli/vision-plugin-plugin-v1>
 ```
 
 Generate the code
